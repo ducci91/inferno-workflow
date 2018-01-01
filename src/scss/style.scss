@@ -1,0 +1,24 @@
+// globals
+@import "reset";
+@import "vars";
+@import "mixins";
+@import "container";
+@import "svg";
+
+// components
+@import "../components/dummy-component/dummy-component";
+
+// base
+html {
+  box-sizing: border-box;
+}
+
+*,
+:before,
+:after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: "Open Sans";
+}

@@ -1,0 +1,24 @@
+.container {
+  margin: 0 30px;
+
+  @include breakpoint($mq-480) {
+    margin: 0 40px;
+  }
+
+  @include breakpoint($mq-768) {
+    margin: auto;
+    width: 668px;
+  }
+
+  @include breakpoint($mq-1024) {
+    width: 900px;
+  }
+
+  @include breakpoint($mq-1360) {
+    width: 1200px;
+  }
+
+  @include breakpoint($mq-1920) {
+    width: 1400px;
+  }
+}

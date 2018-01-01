@@ -1,0 +1,10 @@
+/**
+ * mixin for breakpoint
+ * usage: @include breakpoint($mq-320) {}
+ * $mq-320 or any other variable declared in _vars.scss
+ */
+@mixin breakpoint($width) {
+  @media (min-width: $width) {
+    @content;
+  }
+}
