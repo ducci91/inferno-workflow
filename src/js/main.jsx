@@ -1,18 +1,11 @@
 import "babel-polyfill";
 import DummyComponent from './DummyComponent.jsx';
 
-
-class lalaland {
-  constructor() {
-    console.log("YO");
-  }
-}
-
-const t = new lalaland();
-
-console.log(t);
+/* Your Code goes here */
 
 
+
+/* include SVG to DOM */
 $.get("public/assets/icons.svg", (data) => {
   $("body").append(data);
 });
