@@ -7,7 +7,10 @@ opinionated simple frontend gulp workflow including
 
 ## start
 1. `npm i`
-2. `gulp`
+2. `npm start`
+
+## build
+`npm run build`
 
 ## icons taken from:
   - arrow down:

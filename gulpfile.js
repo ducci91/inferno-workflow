@@ -21,6 +21,8 @@ var svgmin = require('gulp-svgmin');
 var path = require('path');
 var imageminJpegRecompress = require('imagemin-jpeg-recompress');
 
+var mode = gutil.env.mode;
+
 function swallowError (error) {
 	console.log("ERROR");
 	// If you want details of the error in the console
@@ -39,14 +41,26 @@ gulp.task('reload-browser', ['js'], function(){
  */
 gulp.task('js', function() {
     // Assumes a file has been transformed from
-    return  browserify('./src/js/main.jsx')
-      .transform("babelify", {presets: ["es2015"], plugins: ["inferno"]})
+    var stream = browserify('./src/js/main.jsx', {
+        debug: true
+      })
+      .transform("babelify", {
+        presets: ["es2015"],
+        plugins: ["inferno"],
+        sourceMaps: true
+      })
       .bundle()
       .on('error', swallowError)
       .pipe(source('main.js'))
-      .pipe(buffer())
-      // .pipe(uglify())
-      .pipe(gulp.dest('./public/js'))
+      .pipe(buffer());
+
+    if (mode === "build") {
+      stream = stream.pipe(uglify())
+    }
+
+    stream = stream.pipe(gulp.dest('./public/js'));
+
+    return stream;
 });
 
 // Compile sass into CSS & auto-inject into browsers
@@ -85,18 +99,21 @@ gulp.task('handlebars', function () {
 // Static Server + watching scss/html files
 gulp.task('serve', ['handlebars', 'sass', 'js'], function() {
 
-  browserSync.init({
-    server: "./",
-    online: false,
-    notify: false,
-    ghostMode: false
-  });
+  if (mode !== "build") {
 
-  gulp.watch("./src/**/*.scss", ['sass']);
-  gulp.watch("./src/js/**/*.js", ['reload-browser']);
-  gulp.watch("./src/js/**/*.jsx", ['reload-browser']);
-  gulp.watch("./**/*.hbs", ['handlebars', 'reload-browser', 'vendors', 'fonts' ,'assets', 'svgstore']); // when saving hbs files, everything except scss will be built
-  gulp.watch("./*.json", ['handlebars', 'reload-browser']);
+    browserSync.init({
+      server: "./",
+      online: false,
+      notify: false,
+      ghostMode: false
+    });
+
+    gulp.watch("./src/**/*.scss", ['sass']);
+    gulp.watch("./src/js/**/*.js", ['reload-browser']);
+    gulp.watch("./src/js/**/*.jsx", ['reload-browser']);
+    gulp.watch("./**/*.hbs", ['handlebars', 'reload-browser', 'vendors', 'fonts' ,'assets', 'svgstore']); // when saving hbs files, everything except scss will be built
+    gulp.watch("./*.json", ['handlebars', 'reload-browser']);
+  }
 });
 
 gulp.task('assets', () =>
