@@ -17,7 +17,6 @@
     "browserify": "13.3.0",
     "gulp": "3.9.1",
     "gulp-babel": "7.0.0",
-    "gulp-cache-bust": "https://github.com/ducci91/gulp-cache-bust.git",
     "gulp-clean-css": "3.9.0",
     "gulp-color": "0.0.1",
     "gulp-hb": "5.1.4",

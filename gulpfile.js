@@ -8,7 +8,6 @@ var sass = require('gulp-sass');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 var hb = require('gulp-hb');
-var cachebust = require('gulp-cache-bust');
 var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 var buffer = require('vinyl-buffer');
@@ -87,9 +86,6 @@ gulp.task('handlebars', function () {
       debug: true
     }))
     .on("error", swallowError)
-    .pipe(cachebust({
-      type: 'timestamp'
-    }))
     .pipe(rename({
       extname: ".html"
     }))
